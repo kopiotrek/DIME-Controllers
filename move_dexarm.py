@@ -1,4 +1,5 @@
 import rospy
+import time
 
 from allegro_hand.controller import AllegroController
 from kinova_arm.controller import KinovaController
@@ -13,6 +14,7 @@ ALLEGRO_HOME_VALUES = [ 0.        , -0.17453293,  0.78539816,  0.78539816,  0.  
     -0.17453293,  0.78539816,  0.78539816,  0.08726646, -0.08726646,
     0.87266463,  0.78539816,  1.04719755,  0.43633231,  0.26179939,
     0.78539816]
+# ALLEGRO_HOME_VALUES = [0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
 
 class DexArmControl():
     def __init__(self):
@@ -22,11 +24,14 @@ class DexArmControl():
             pass
     
         self.allegro = AllegroController()
-        self.kinova = KinovaController()
+        # self.kinova = KinovaController()
+        # while True:
+        #     print('allegro.hand_pose(ALLEGRO_HOME_VALUES)')
+        #     self.allegro.hand_pose(ALLEGRO_HOME_VALUES)
 
     def home_robot(self):
         # Homing the Kinova Arm
-        self.kinova.joint_movement(KINOVA_HOME_VALUES, False)
+        # self.kinova.joint_movement(KINOVA_HOME_VALUES, False)
 
         # Homing the Allegro Hand
         self.allegro.hand_pose(ALLEGRO_HOME_VALUES)
@@ -36,20 +41,22 @@ class DexArmControl():
         self.allegro.hand_pose(ALLEGRO_HOME_VALUES)
 
         # Homing the Kinova Arm
-        self.kinova.joint_movement(KINOVA_SPIN_HOME_VALUES, False)
+        # self.kinova.joint_movement(KINOVA_SPIN_HOME_VALUES, False)
 
         # rospy.sleep(5)
         # self.kinova.joint_movement(KINOVA_SPIN_POS_VALUES, False)
 
     def move_robot(self, allegro_angles, kinova_angles):
-        self.kinova.joint_movement(kinova_angles, False)
+        # self.kinova.joint_movement(kinova_angles, False)
         self.allegro.hand_pose(allegro_angles)
 
     def move_hand(self, allegro_angles):
         self.allegro.hand_pose(allegro_angles)
+        print('DEBUG1')
 
     def move_arm(self, kinova_angles):
-        self.kinova.joint_movement(kinova_angles, False)
+        pass
+        # self.kinova.joint_movement(kinova_angles, False)
 
 if __name__ == '__main__':
     dex_arm = DexArmControl()

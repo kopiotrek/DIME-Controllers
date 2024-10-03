@@ -1,1 +1,4 @@
 src/drivers
+/build
+/devel
+/__pycache__
